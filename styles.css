@@ -1,0 +1,165 @@
+/* Estilos generales */
+body {
+    background: #050505;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    perspective: 1000px;
+}
+
+/* Estilos para los pétalos */
+.petal {
+    position: absolute;
+    will-change: transform;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    overflow: hidden;
+    filter: drop-shadow(0 0 10px rgb(255, 100, 152));
+}
+
+img {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+/* Estilos para el cristal */
+.cristal {
+    position: absolute;
+    left: calc(50vw - 150px);
+    width: 300px;
+    height: 650px;
+    border-radius: 200px 200px 50px 50px;
+    box-sizing: border-box;
+    top: 170px;
+    z-index: 1;
+    transform-style: preserve-3d;
+    overflow: hidden;
+    box-shadow: 
+        inset 0 0 50px rgba(255,255,255,0.1),
+        0 0 15px rgba(255,255,255,0.05);
+    border: 1px solid white;
+}
+
+/* Reflejo en el vidrio */
+.cristal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(to right, 
+        rgba(255,255,255,0) 0%, 
+        rgba(255,255,255,0.1) 20%, 
+        rgba(255,255,255,0) 40%);
+    transform: skewX(-15deg) translateX(-200%);
+    animation: reflejo 10s ease-in-out infinite;
+}
+
+/* Borde brillante del vidrio */
+.cristal::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 200px 200px 50px 50px;
+    box-shadow: 
+        inset 0 0 40px 10px rgba(255,255,255,0.1),
+        inset 0 0 20px rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    pointer-events: none;
+}
+
+/* Animación del reflejo */
+@keyframes reflejo {
+    0% { transform: skewX(-15deg) translateX(-200%); }
+    30% { transform: skewX(-15deg) translateX(200%); }
+    100% { transform: skewX(-15deg) translateX(200%); }
+}
+
+/* Fuente de luz */
+.light-source {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+    filter: blur(15px);
+    box-shadow: 0 0 60px 30px rgba(255,255,255,0.2);
+    z-index: 0;
+    opacity: 0.6;
+    pointer-events: none;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulseLight 8s ease-in-out infinite;
+}
+
+/* Animación del pulso de luz */
+@keyframes pulseLight {
+    0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
+    50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.1); }
+    100% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
+}
+
+/* Haz de luz */
+.light-beam {
+    position: absolute;
+    width: 500px;
+    height: 800px;
+    background: radial-gradient(ellipse at top, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 50%, rgba(255,255,255,0) 70%);
+    transform-origin: top center;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, 0) rotate(0deg);
+    z-index: 0;
+    opacity: 0.8;
+    pointer-events: none;
+    filter: blur(10px);
+}
+
+/* Sombra ambiental */
+.ambient-shadow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 30%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Base del cristal */
+.base {
+    position: absolute;
+    width: 320px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(to bottom, 
+        rgba(50,50,50,0.8) 0%, 
+        rgba(20,20,20,0.9) 100%);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 0;
+}
+
+/* Tallo */
+#talloc {
+    position: absolute;
+    top: calc(50% - 8px);
+    left: calc(50% - 11px);
+    z-index: 0;
+}
+
+/* Animación para los reflejos del cristal */
+@keyframes pulse {
+    0% { opacity: 0.1; transform: scale(0.8); }
+    50% { opacity: 0.3; transform: scale(1.2); }
+    100% { opacity: 0.1; transform: scale(0.8); }
+}
